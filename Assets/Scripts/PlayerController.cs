@@ -4,17 +4,17 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    // Initial Player Stats
+    [Header("Initial Player Stats")]
     [SerializeField] private float initialSpeed = 5.0f;
     [SerializeField] private int initialHealth = 100;
 
-
+    // Private Variables
     private PlayerStats stats;
+    private Vector2 moveInput;
 
     // Components
-    Rigidbody2D rBody;
-
-    // Private variables
-    Vector2 moveInput;
+    private Rigidbody2D rBody;
 
     void Awake()
     {
@@ -31,7 +31,6 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         ApplyMovement();
-        Debug.Log(stats.MoveSpeed);
     }
 
     private void ApplyMovement()
@@ -39,5 +38,12 @@ public class PlayerController : MonoBehaviour
         float targetVelocityX = moveInput.x * stats.MoveSpeed;
 
         rBody.linearVelocity = new Vector2(targetVelocityX, rBody.linearVelocity.y);
+    }
+
+    public void TakeDamage(int damageAmount)
+    {
+        stats.CurrentHealth -= damageAmount;
+
+        Debug.Log("Player took damage");
     }
 }
