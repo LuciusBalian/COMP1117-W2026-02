@@ -1,15 +1,16 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Rigidbody2D), typeof(Animator))]
 public class Character : MonoBehaviour
 {
     // Private variables
     [Header("Character Stats")]
     [SerializeField] private float moveSpeed = 5.0f;
     [SerializeField] private int maxHealth = 100;
-
     [SerializeField] private int currentHealth;
+
     private bool isDead = false;
+    protected Animator anim;
 
     // Public properties
     public float MoveSpeed
@@ -33,6 +34,9 @@ public class Character : MonoBehaviour
     {
         Debug.Log("Character Awake function");
         currentHealth = maxHealth;
+        /////////////////////
+        anim = GetComponent<Animator>();
+        /////////////////////
     }
 
     public void TakeDamage(int amount)
