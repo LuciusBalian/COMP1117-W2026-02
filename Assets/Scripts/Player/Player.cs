@@ -36,7 +36,7 @@ public class Player : Character
         anim.SetFloat("yVelocity", rBody.linearVelocity.y);
 
         // Handle sprite flipping
-        if (input.MoveInput.x != 0)
+        if (input.MoveInput.x != 0 && !IsDead)
         {
             transform.localScale = new Vector3(Mathf.Sign(input.MoveInput.x), 1, 1);    // (x, y, z) -- Scale
         }
@@ -44,6 +44,11 @@ public class Player : Character
 
     private void FixedUpdate()  // Movement goes here (Move and jump)
     {
+        if(IsDead)
+        {
+            return;
+        }
+
         // Handle Movement
         HandleMovement();
         // Handle Jumping
@@ -83,5 +88,18 @@ public class Player : Character
     public void ApplySpeedModifier(float speedModifier)
     {
         currentSpeedModifier = speedModifier;
+    }
+
+    public override void Die()
+    {
+        isDead = true;
+        Debug.Log("Player has Died");
+
+        // PLAYER DEATH LOGIC!
+        // -------------------
+        // Add player specific death logic
+        // Set death animation
+        // Trigger death UI
+        // Initiate level reset logic
     }
 }
