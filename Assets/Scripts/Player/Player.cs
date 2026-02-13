@@ -13,6 +13,7 @@ public class Player : Character
     private bool isGrounded;
     private PlayerInputHandler input;
     private float currentSpeedModifier = 1f;
+    
 
     protected override void Awake()
     {
@@ -88,6 +89,11 @@ public class Player : Character
     public void ApplySpeedModifier(float speedModifier)
     {
         currentSpeedModifier = speedModifier;
+    }
+
+    public void ApplyGravityModifier(float gravityModifier)
+    {
+        rBody.gravityScale = gravityModifier;
     }
 
     public override void Die()

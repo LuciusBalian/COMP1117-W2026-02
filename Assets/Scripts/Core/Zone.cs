@@ -17,6 +17,7 @@ public abstract class Zone : MonoBehaviour
     // The "contract"
     // Every child object MUST define what happens in this method
     protected abstract void ApplyZoneEffect(Player player);
+    
 
     // We use a trigger to detect the player
     private void OnTriggerStay2D(Collider2D collision)
@@ -27,6 +28,9 @@ public abstract class Zone : MonoBehaviour
             ApplyZoneEffect(player);
         }
     }
+
+    
+    
 
     private void OnDrawGizmos()
     {
