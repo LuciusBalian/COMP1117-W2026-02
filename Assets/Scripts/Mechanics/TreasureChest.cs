@@ -24,6 +24,7 @@ public class TreasureChest : MonoBehaviour, IInteractable
 
         isOpened = true;
         OpenChest();
+        Debug.Log("Opening Chest");
     }
 
     private void OpenChest()
