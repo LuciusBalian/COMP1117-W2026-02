@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 
-public class CircularBuffer
+public class CircularBuffer<T>
 {
-    private List<int> buffer;
+    private List<T> buffer;
     private int capacity;
 
     public CircularBuffer(int capacity)
     {
-        buffer = new List<int>(capacity);
+        buffer = new List<T>(capacity);
         this.capacity = capacity;
     }
 
@@ -20,7 +20,7 @@ public class CircularBuffer
     //}
 
     public int Count => buffer.Count;
-    public void Push(int item)
+    public void Push(T item)
     {
         // check if buffer is at or above capacity
         if (buffer.Count >= capacity)
@@ -30,15 +30,15 @@ public class CircularBuffer
         buffer.Add(item);
     }
 
-    public int Pop()
+    public T Pop()
     {
         if (buffer.Count == 0)
         {
-            return -1; // -1 will act as a special value to check against
+            return default(T); // default returns default value of data type T
         }
         int lastIndex = buffer.Count - 1;
 
-        int item = buffer[lastIndex];
+        T item = buffer[lastIndex];
         buffer.RemoveAt(lastIndex);
 
         return item;

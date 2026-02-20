@@ -7,11 +7,14 @@ public class TimeRewinder : MonoBehaviour
     [SerializeField] private int maxFrames = 300;
     public bool isRewinding = false;
 
-    private CircularBuffer intBuffer;
+    private CircularBuffer<Vector3> positionHistory;
+    private CircularBuffer<Quaternion> rotationHistory;
+    private CircularBuffer<Vector3> scaleHistory;
     private void Awake()
     {
-        intBuffer = new CircularBuffer(maxFrames);
-
+        positionHistory = new CircularBuffer<Vector3>(maxFrames);
+        rotationHistory = new CircularBuffer<Quaternion>(maxFrames);
+        scaleHistory = new CircularBuffer<Vector3>(maxFrames);
     }
 
     public void onRewind(InputAction.CallbackContext context)
@@ -28,7 +31,7 @@ public class TimeRewinder : MonoBehaviour
         }
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (!isRewinding)
             Record();
@@ -40,15 +43,26 @@ public class TimeRewinder : MonoBehaviour
 
     private void Record()
     {
-        int tempInt = Random.Range(0, 1000);
-        intBuffer.Push(tempInt);
+        positionHistory.Push(transform.position);
+        rotationHistory.Push(transform.rotation);
+        scaleHistory.Push(transform.localScale);
     }
 
     //Rewind - retrieves information every frame from the buffer
 
     private void Rewind()
     {
-        int tempInt = intBuffer.Pop();
-        Debug.Log("Popped Value: " + tempInt);
+        if (positionHistory.Count > 0)
+        {
+            transform.position = positionHistory.Pop();
+            transform.rotation = rotationHistory.Pop();
+
+            Vector3 tempLocalScale = scaleHistory.Pop();
+            transform.localScale = new Vector3(-tempLocalScale.x, tempLocalScale.y, tempLocalScale.z);
+        }
+        else
+        {
+            isRewinding = false;
+        }
     }
 }
