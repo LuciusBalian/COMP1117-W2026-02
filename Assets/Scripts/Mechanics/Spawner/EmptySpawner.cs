@@ -1,11 +1,12 @@
 using UnityEngine;
 
-public class EmptySpawner : MonoBehaviour
+public class EntitySpawner : MonoBehaviour
 {
-    public GameObject Spawn(GameObject prefab, Vector3 position)
+    public T Spawn<T>(T prefab, Vector3 position) where T : Component
     {
-        GameObject gObj = Instantiate(prefab, position, Quaternion.identity);
+        T gObj = Instantiate(prefab, position, Quaternion.identity);
 
+        
         return gObj;
     }
 }
