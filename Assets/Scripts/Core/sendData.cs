@@ -2,15 +2,16 @@ using UnityEngine;
 
 public class sendData : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    NotificationManager notificationManager;
 
-    // Update is called once per frame
-    void Update()
+    void Awake()
+    {
+        notificationManager = GetComponent<NotificationManager>();
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         
+        string text = "yoyyoyo";
+        notificationManager.PostNotification<string>(text);
     }
 }
